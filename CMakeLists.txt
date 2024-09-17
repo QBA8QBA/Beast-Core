@@ -19,5 +19,5 @@ target_link_libraries(Beast-core PUBLIC user32 Kernel32)
 set_target_properties(Beast-core PROPERTIES OUTPUT_NAME "Beast-core" PREFIX "" SUFFIX ".dll" RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
 add_executable(example sandbox/main.cpp)
-target_link_libraries(example PRIVATE Beast-core) 
+target_link_libraries(example PRIVATE Beast-core d3d11 D3DCompiler) 
 set_target_properties(example PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

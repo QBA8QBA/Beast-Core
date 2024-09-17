@@ -1,15 +1,10 @@
-/*#include <windows.h>
+#pragma once
+#include "types.h"
+
 #include <d3d11.h>
 #include <DirectXMath.h>
-#include <chrono>
-#include <thread>
 #include <d3dcompiler.h>
 
-// Window dimensions
-const int WIDTH = 800;
-const int HEIGHT = 600;
-
-// Global DirectX variables
 ID3D11Device* device = nullptr;
 ID3D11DeviceContext* context = nullptr;
 IDXGISwapChain* swapChain = nullptr;
@@ -19,7 +14,9 @@ ID3D11InputLayout* inputLayout = nullptr;
 ID3D11VertexShader* vertexShader = nullptr;
 ID3D11PixelShader* pixelShader = nullptr;
 
-// Vertex structure
+const int WIDTH = 800;
+const int HEIGHT = 600;
+
 struct Vertex {
     DirectX::XMFLOAT3 position;
     DirectX::XMFLOAT4 color;
@@ -57,56 +54,6 @@ float4 main(PS_INPUT input) : SV_Target {
 }
 )";
 
-// Forward declarations
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-void InitD3D(HWND hWnd);
-void CleanD3D();
-void InitGraphics();
-void InitPipeline();
-void RenderFrame();
-
-// Entry point
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow) {
-    // Initialize the window
-    WNDCLASSEXW wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WindowProc, 0, 0, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, L"DirectXWindowClass", NULL };
-    RegisterClassExW(&wc);
-    HWND hWnd = CreateWindowExW(0, L"DirectXWindowClass", L"DirectX 2D Shape", WS_OVERLAPPEDWINDOW, 100, 100, WIDTH, HEIGHT, NULL, NULL, wc.hInstance, NULL);
-
-    // Show the window
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
-
-    // Initialize Direct3D
-    InitD3D(hWnd);
-
-    // Enter the message loop
-    MSG msg = { 0 };
-    while (msg.message != WM_QUIT) {
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        } else {
-            RenderFrame();
-        }
-    }
-
-    // Clean up Direct3D
-    CleanD3D();
-
-    return 0;
-}
-
-// Window procedure function
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    switch (message) {
-        case WM_DESTROY:
-            PostQuitMessage(0);
-            return 0;
-    }
-    return DefWindowProc(hWnd, message, wParam, lParam);
-}
-
-// Initialize Direct3D
 void InitD3D(HWND hWnd) {
     DXGI_SWAP_CHAIN_DESC scd = {};
     scd.BufferCount = 1;
@@ -227,26 +174,4 @@ void RenderFrame() {
 
     // Swap the back and front buffers
     swapChain->Present(0, 0);
-}*/
-
-#include "system_app.hpp"
-#include "system_event.hpp"
-
-#include <iostream>
-
-int main()
-{
-    App app;
-    Event event;
-    while(app.IsRuning())
-    {
-        while(app.GetEvent(event))
-        {
-            if(event.type==EVENT::KEY_PRESED)
-            {
-                std::cout<<event.keyCode;
-            }
-        }
-    }
-    
 }
